@@ -31,7 +31,8 @@ public class JSONWrapper {
 
     // Get a specific JSON element from the current JSON Object and return it as another JSON Object
     public JSONWrapper element(String key) {
-        return new JSONWrapper(jsonObj.get(key));
+        Object obj = jsonObj.get(key);
+        return obj != null ? new JSONWrapper(obj) : null;
     }
 
     // Same that JSONWrapper element(String key)
@@ -48,7 +49,7 @@ public class JSONWrapper {
     public List<JSONWrapper> array(String key) { 
         List<JSONWrapper> jsons = new List<JSONWrapper>();
         for (Object e : (List<Object>) jsonObj.get(key)) {
-            jsons.add(new JSONWrapper(e));
+            jsons.add(e != null ? new JSONWrapper(e) : null);
         }
         return jsons;
     }
@@ -65,6 +66,7 @@ public class JSONWrapper {
 
     // String parses
     private String objToString(Object value) {
+        if(value == null) return null;
         return String.valueOf(value);
     }
 
@@ -93,8 +95,9 @@ public class JSONWrapper {
     }
 
     // Integer Parses
-    private Integer objToInteger(Object obj) {
-        return Integer.valueOf(objToString(obj));
+    private Integer objToInteger(Object value) {
+        if(value == null) return null;
+        return Integer.valueOf(objToString(value));
     }
     
     // Get a specific attribute from the current JSON Object and return it as a Integer
@@ -122,8 +125,9 @@ public class JSONWrapper {
     }
 
     // Double Parses
-    private Double objToDouble(Object obj) {
-        return Double.valueOf(objToString(obj));
+    private Double objToDouble(Object value) {
+        if(value == null) return null;
+        return Double.valueOf(objToString(value));
     }
 
     // Get a specific attribute from the current JSON Object and return it as a Double
@@ -151,8 +155,9 @@ public class JSONWrapper {
     }
     
     // Double Parses
-    private Boolean objToBoolean(Object obj) {
-        return Boolean.valueOf(objToString(obj));
+    private Boolean objToBoolean(Object value) {
+        if(value == null) return null;
+        return Boolean.valueOf(objToString(value));
     }
 
     // Get a specific attribute from the current JSON Object and return it as a Boolean
@@ -184,7 +189,7 @@ public class JSONWrapper {
         return jsonObj.get(key);
     }
 
-    // Get actual object
+    // Get actual object 
     public Map<String, Object> get() {
         return jsonObj;
     }
